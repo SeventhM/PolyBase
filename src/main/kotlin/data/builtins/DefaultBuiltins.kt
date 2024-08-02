@@ -18,3 +18,7 @@ class Forest: TileFeature("forest", FeatureType.terrain) {
 class Mountain: TileFeature("mountain", FeatureType.terrain) {
     override var gridName = "M"
 }
+
+class Blank: TileFeature("none", FeatureType.base) {
+    override var gridName = ""
+}

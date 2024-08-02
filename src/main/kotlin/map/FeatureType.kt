@@ -1,5 +1,5 @@
 package mcom.map
 
 enum class FeatureType {
-    base, resource, terrain, terraform, none
+    base, resource, terrain, city, other, terraform, none
 }

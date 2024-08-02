@@ -1,13 +1,8 @@
 package mcom.map
 
-open class TileFeature {
+open class TileFeature(open val name: String = "", val type: FeatureType) {
     constructor(name: String = ""): this(name, FeatureType.none)
-    constructor(name: String = "", type: FeatureType) {
-        this.type = type
-        this.name = name
-    }
-    val type: FeatureType
-    val name: String
+
     open var gridName: String = ""
 
     override fun toString(): String {

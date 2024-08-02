@@ -1,15 +1,21 @@
 package mcom
 
-import mcom.data.builtins.Water
+import mcom.game.Game
 import mcom.map.square.SquareTileMap
+import mcom.player.Player
 
 fun main() {
-    val map = SquareTileMap(11)
-    for (tile in map.tiles) {
-        tile.features.add(Water())
+    val game = Game()
+
+    for (i in 0..<4) {
+        game.addPlayer(Player())
     }
-    for (x in 0..<map.height) {
-        for (y in 0..<map.width) {
+    game.updatePorts()
+    val map = SquareTileMap(18)
+    map.dryLand()
+    map.defaultSetPlayers(game.players)
+    for (y in 0..<map.height) {
+        for (x in 0..<map.width) {
             val tile = map.getTile(x, y)
             print(tile)
             print(" | ")
