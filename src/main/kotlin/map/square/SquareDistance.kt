@@ -1,10 +1,11 @@
 package mcom.map.square
 
+import mcom.map.MapType
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) {
+class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) : Comparable<SquareDistance> {
     val tileTo = tileTo
     val tileFrom = tileFrom
     val distance: Int
@@ -12,6 +13,7 @@ class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) {
     val diagonalDiff: Int
     val absDiagonalDiff: Int
     val manDistance: Int
+    val type = MapType.Square
     init {
         if (tileTo.map !== tileFrom.map) throw IllegalStateException("Maps are somehow different")
         if (tileFrom == tileTo) {
@@ -53,5 +55,17 @@ class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) {
             diagonalDiff = xDistance - yDistance
             absDiagonalDiff = abs(diagonalDiff)
         }
+    }
+
+    override fun compareTo(other: SquareDistance): Int {
+        if (distance > other.distance)
+            return 1
+        if (distance < other.distance)
+            return -1
+        if (secondaryDistance > other.secondaryDistance)
+            return 1
+        if (secondaryDistance < other.secondaryDistance)
+            return -1
+        return 0
     }
 }

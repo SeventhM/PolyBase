@@ -6,6 +6,7 @@ import mcom.player.Player
 class Game {
     var currentMap: TileMap? = null
     var players: ArrayList<Player> = ArrayList()
+    var isCompatibilityMode = true
 
     fun addPlayer(player: Player, immediateUpdate: Boolean = false) {
         players.add(player)
@@ -18,8 +19,8 @@ class Game {
     }
 
     fun updatePorts() {
-        for (i in players.indices) {
-            players[i].playerPort = i + 1
+        for ((i, player) in players.withIndex()) {
+            player.playerPort = i + 1
         }
     }
 }

@@ -1,4 +1,5 @@
 package mcom.map
 
-open class TileMap {
+abstract class TileMap {
+    abstract val ruleType: MapType
 }

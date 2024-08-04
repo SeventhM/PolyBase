@@ -3,11 +3,13 @@ package mcom.map.square
 import mcom.city.City
 import mcom.data.builtins.Land
 import mcom.data.builtins.Water
+import mcom.map.MapType
 import mcom.map.TileMap
 import mcom.player.Player
 import kotlin.properties.Delegates
 
 class SquareTileMap : TileMap {
+    override val ruleType: MapType = MapType.Square
     val tiles = ArrayList<SquareTile>()
     var wrapX: Boolean = false
     var wrapY: Boolean = false
@@ -45,11 +47,10 @@ class SquareTileMap : TileMap {
         val capitalMap: HashMap<Player, City> = HashMap()
         // start with random cities for variance
         for (player in players) {
-            val city = City("")
+            val city = City("", player)
             city.isCapital = true
             city.originalCapital = true
             city.originalOwner = "player_${player.name}port${player.playerPort}"
-            city.owner = "player_${player.name}port${player.playerPort}"
             capitalMap[player] = city
             var tile = tiles.random()
             while (tile.city != null && tile.base.name != "land") tile = tiles.random()
@@ -72,15 +73,8 @@ class SquareTileMap : TileMap {
                             smallestDistanceFromPlayer = distance
                             continue
                         }
-                        if (distance.distance < smallestDistanceFromPlayer.distance) {
+                        if (distance < smallestDistanceFromPlayer) {
                             smallestDistanceFromPlayer = distance
-                            continue
-                        }
-                        if (distance.distance == smallestDistanceFromPlayer.distance &&
-                            distance.secondaryDistance < smallestDistanceFromPlayer.secondaryDistance
-                        ) {
-                            smallestDistanceFromPlayer = distance
-                            continue
                         }
                     }
                     if (smallestDistanceFromPlayer == null) continue
@@ -89,15 +83,8 @@ class SquareTileMap : TileMap {
                         largestDistance = smallestDistanceFromPlayer
                         continue
                     }
-                    if (smallestDistanceFromPlayer.distance > largestDistance.distance) {
+                    if (smallestDistanceFromPlayer > largestDistance) {
                         largestDistance = smallestDistanceFromPlayer
-                        continue
-                    }
-                    if (smallestDistanceFromPlayer.distance == largestDistance.distance &&
-                        smallestDistanceFromPlayer.secondaryDistance > largestDistance.secondaryDistance
-                    ) {
-                        largestDistance = smallestDistanceFromPlayer
-                        continue
                     }
                 }
                 if (largestDistance == null) throw RuntimeException()
@@ -140,7 +127,7 @@ class SquareTileMap : TileMap {
             for (j in 0..<3) {
                 for (i in tiles.indices) {
                     val tile = tiles[i]
-                    val nearBy = tile.neighborsWithSelf as MutableList<SquareTile>
+                    val nearBy = tile.neighborsWithSelf as List<SquareTile>
                     val half = nearBy.size / 2
                     val landCount = nearBy.count { it.base.name == "land" }
                     if (half > landCount) {

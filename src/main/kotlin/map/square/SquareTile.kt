@@ -1,17 +1,18 @@
 package mcom.map.square
 
+import mcom.map.MapType
 import mcom.map.Tile
 
 class SquareTile(map: SquareTileMap, x: Int, y: Int): Tile() {
     val x = x
     val y = y
-    override val ruleType: String = "square"
+    override val ruleType = MapType.Square
     val location get() = (map as SquareTileMap).height * y + x
     init {
         this.map = map
     }
 
-    override fun getNeighbors(distance: Int, includeSelf: Boolean): MutableList<Tile> {
+    override fun getNeighbors(distance: Int, includeSelf: Boolean): List<SquareTile> {
         if (distance <= 0) throw IllegalArgumentException()
         val map = map as SquareTileMap
         val tiles = ArrayList<SquareTile>()
@@ -38,8 +39,7 @@ class SquareTile(map: SquareTileMap, x: Int, y: Int): Tile() {
             }
         }
 
-        @Suppress("UNCHECKED_CAST")
-        return tiles as MutableList<Tile>
+        return tiles
     }
 
     fun getDistanceTo(tile: SquareTile): SquareDistance {
