@@ -33,7 +33,7 @@ class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) : Comparable<Squa
                 xDistance1 = placeHolder
             }
             if (map.wrapX && xDistance2 != 0) {
-                xDistance2 += map.width
+                xDistance2 += map.sizeX
             }
             val xDistance = if (map.wrapX) min(xDistance1, xDistance2) else xDistance1
 
@@ -46,12 +46,12 @@ class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) : Comparable<Squa
                 yDistance1 = placeHolder
             }
             if (map.wrapY && yDistance2 != 0) {
-                yDistance2 += map.height
+                yDistance2 += map.sizeY
             }
             val yDistance = if (map.wrapY) min(yDistance1, yDistance2) else yDistance1
             manDistance = xDistance + yDistance
-            distance = min(xDistance, yDistance)
-            secondaryDistance = max(xDistance, yDistance)
+            distance = max(xDistance, yDistance)
+            secondaryDistance = min(xDistance, yDistance)
             diagonalDiff = xDistance - yDistance
             absDiagonalDiff = abs(diagonalDiff)
         }

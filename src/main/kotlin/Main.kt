@@ -1,6 +1,7 @@
 package mcom
 
 import mcom.game.Game
+import mcom.map.MapType
 import mcom.map.square.SquareTile
 import mcom.map.square.SquareTileMap
 import mcom.map.unit.MapUnit
@@ -14,9 +15,10 @@ fun main() {
         game.addPlayer(Player())
     }
     game.updatePorts()
-    val map = SquareTileMap(18)
-    map.dryLand()
+    game.createNewMap(MapType.Square, 18, "drylands")
+    val map = game.currentMap as SquareTileMap
     map.defaultSetPlayers(game.players)
+    map.defaultSetVillages()
     val unit = MapUnit()
     unit.maxMovement = 3
     unit.resetMovement()
@@ -24,11 +26,11 @@ fun main() {
     unit.tile = tile
     tile.unit = unit
     val moveables = unit.getMovableTiles()
-    for (y in 0..<map.height) {
-        for (x in 0..<map.width) {
+    for (y in 0..<map.sizeY) {
+        for (x in 0..<map.sizeX) {
             val tile = map.getTile(x, y)
             print(tile)
-            print("$x , $y")
+            //print("$x , $y")
             print(" | ")
         }
         println()
