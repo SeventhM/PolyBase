@@ -1,5 +1,6 @@
 package mcom.map.square
 
+import mcom.map.Distance
 import mcom.map.MapType
 import mcom.map.Tile
 
@@ -11,6 +12,9 @@ class SquareTile(map: SquareTileMap, x: Int, y: Int): Tile() {
     init {
         this.map = map
     }
+
+    override val locationInfo: String
+        get() = "$x, $y"
 
     var nearBorder = false
         private set
@@ -117,6 +121,11 @@ class SquareTile(map: SquareTileMap, x: Int, y: Int): Tile() {
         }
 
         return tiles.distinct()
+    }
+
+    override fun getDistanceTo(tile: Tile): SquareDistance {
+        if (tile is SquareTile) return SquareDistance(this, tile)
+        else throw IllegalArgumentException()
     }
 
     fun getDistanceTo(tile: SquareTile): SquareDistance {

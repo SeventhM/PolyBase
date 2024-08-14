@@ -1,19 +1,18 @@
 package mcom.map.square
 
+import mcom.map.Distance
 import mcom.map.MapType
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) : Comparable<SquareDistance> {
-    val tileTo = tileTo
-    val tileFrom = tileFrom
-    val distance: Int
+class SquareDistance(tileFrom: SquareTile, tileTo: SquareTile) : Distance(tileFrom, tileTo), Comparable<SquareDistance> {
+    override val distance: Int
     val secondaryDistance: Int
     val diagonalDiff: Int
     val absDiagonalDiff: Int
     val manDistance: Int
-    val type = MapType.Square
+    override val ruleType = MapType.Square
     init {
         if (tileTo.map !== tileFrom.map) throw IllegalStateException("Maps are somehow different")
         if (tileFrom == tileTo) {

@@ -1,6 +1,7 @@
 package mcom.city
 
 import mcom.Current
+import mcom.data.builtins.UnitBuiltins
 import mcom.map.FeatureType
 import mcom.map.MapType
 import mcom.map.Tile
@@ -31,6 +32,9 @@ class City(override var name: String, tile: Tile? = null, var owningPlayer: Play
         if (tile != null) this.tile = tile
         owningPlayer?.cities?.add(this)
     }
+    val buildableUnits get() = UnitBuiltins.baseUnits.filter {
+        it.value.cityCost < (owningPlayer?.stars ?: return@filter false)
+    }
     val location: Int get()  {
         if (tile.ruleType == MapType.Square) {
             return (tile as SquareTile).location
@@ -52,5 +56,16 @@ class City(override var name: String, tile: Tile? = null, var owningPlayer: Play
             population += level
             level--
         }
+    }
+
+    fun createUnit(unit: String): Boolean {
+        val unit = UnitBuiltins.getUnit(unit) ?: return false
+        unit.owner = owningPlayer
+        tile.unit = unit
+        unit.tile = tile
+        unit.health = unit.maxHealth
+        owningPlayer!!.units.add(unit)
+        owningPlayer!!.stars -= unit.cityCost
+        return true
     }
 }

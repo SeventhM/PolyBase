@@ -8,6 +8,7 @@ import mcom.map.unit.MapUnit
 abstract class Tile {
 
     abstract val ruleType: MapType
+    open val locationInfo: String = ""
     private var features = ArrayList<TileFeature>()
     var base: TileFeature = Blank()
         set(feature) {
@@ -40,6 +41,8 @@ abstract class Tile {
     open val neighbors get() = getNeighbors()
 
     open val neighborsWithSelf get() = getNeighbors(includeSelf = true)
+
+    abstract fun getDistanceTo(tile: Tile): Distance
 
     override fun toString(): String {
         return allFeatures.toString()

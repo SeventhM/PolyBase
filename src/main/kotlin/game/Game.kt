@@ -10,6 +10,7 @@ class Game {
         private set
     var players: ArrayList<Player> = ArrayList()
     var isCompatibilityMode = true
+    var multipleMovement = false
 
     fun createNewMap(type: MapType, size: Int, generateType: String = "", setPlayers: Boolean = false) {
         when(type) {

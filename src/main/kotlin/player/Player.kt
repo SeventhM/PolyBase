@@ -11,6 +11,7 @@ class Player {
     var stars = 0
     val abilities = ArrayList<String>()
     var cities = ArrayList<City>()
+    var units = ArrayList<MapUnit>()
 
     fun gainSPT() {
         for (city in cities) {

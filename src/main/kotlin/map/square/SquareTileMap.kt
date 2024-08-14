@@ -61,7 +61,7 @@ class SquareTileMap : TileMap {
             city.originalCapital = true
             city.originalOwner = player
             player.capital = city
-            player.cities.add(city)
+            //player.cities.add(city)
             capitalMap[player] = city
             val tile = validTiles.random()
             tile.city = city
